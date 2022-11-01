@@ -1,0 +1,1 @@
+drop table SALES_COUNERPARTIES__U05142 if exists cascade ;

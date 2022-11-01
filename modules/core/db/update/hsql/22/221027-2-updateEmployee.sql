@@ -1,0 +1,4 @@
+alter table SALES_EMPLOYEE alter column AUTOSERVICE_ID rename to AUTOSERVICE_ID__U58709 ^
+alter table SALES_EMPLOYEE drop constraint FK_SALES_EMPLOYEE_AUTOSERVICE ;
+drop index IDX_SALES_EMPLOYEE_AUTOSERVICE ;
+alter table SALES_EMPLOYEE add column AUTOSERVICE varchar(36) ;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application-sales"
+          insertBefore="administration">
+        <item screen="sales_Product.browse"/>
+        <item screen="sales_Customer.browse"/>
+        <item screen="sales_Order.browse"/>
+        <item screen="sales_City.browse" caption="mainMsg://menu_config.sales_City.browse"/>
+        <item screen="sales_Autoservice.browse" caption="mainMsg://menu_config.sales_Autoservice.browse"/>
+        <item screen="sales_Employee.browse" caption="mainMsg://menu_config.sales_Employee.browse"/>
+        <item screen="sales_Repair.browse" caption="mainMsg://menu_config.sales_Repair.browse"/>
+        <item screen="sales_Person.browse" caption="mainMsg://menu_config.sales_Person.browse"/>
+        <item screen="sales_Legal.browse" caption="mainMsg://menu_config.sales_Legal.browse"/>
+        <item screen="sales_Individuals.browse" caption="mainMsg://menu_config.sales_Individuals.browse"/>
+    </menu>
+</menu-config>

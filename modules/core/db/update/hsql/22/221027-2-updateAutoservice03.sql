@@ -1,0 +1,2 @@
+alter table SALES_AUTOSERVICE add constraint FK_SALES_AUTOSERVICE_CITY foreign key (CITY_ID) references SALES_CITY(ID);
+create index IDX_SALES_AUTOSERVICE_CITY on SALES_AUTOSERVICE (CITY_ID);

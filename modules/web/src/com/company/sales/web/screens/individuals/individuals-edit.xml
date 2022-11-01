@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://individualsEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.sales.web.screens.individuals">
+    <data>
+        <instance id="individualsDc"
+                  class="com.company.sales.entity.Individuals">
+            <view extends="_local">
+                <property name="autoservices" view="_minimal"/>
+            </view>
+            <loader/>
+            <collection id="autoservicesDc" property="autoservices"/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="individualsDc">
+            <column width="350px">
+                <textField id="last_nameField" property="last_name"/>
+                <textField id="first_nameField" property="first_name"/>
+                <dateField id="birthDayField" property="birthDay"/>
+                <textField id="fieldField" property="field" caption="Field"/>
+            </column>
+        </form>
+        <groupBox id="autoservicesBox" caption="Autoservices">
+            <table id="autoservicesTable" dataContainer="autoservicesDc" width="100%" height="200px">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="autoservicesTable.add"/>
+                    <button action="autoservicesTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

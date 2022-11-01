@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://autoserviceBrowse.caption"
+        focusComponent="autoservicesTable"
+        messagesPack="com.company.sales.web.screens.autoservice">
+    <data readOnly="true">
+        <collection id="autoservicesDc"
+                    class="com.company.sales.entity.Autoservice">
+            <view extends="_local">
+                <property name="employees" view="_minimal">
+                    <property name="last_name"/>
+                    <property name="first_name"/>
+                    <property name="birthday"/>
+                    <property name="salary"/>
+                    <property name="email"/>
+                </property>
+                <property name="city" view="_minimal"/>
+                <property name="clients" view="_minimal">
+                    <property name="last_name"/>
+                    <property name="first_name"/>
+                    <property name="birthDay"/>
+                </property>
+            </view>
+            <loader id="autoservicesDl">
+                <query>
+                    <![CDATA[select e from sales_Autoservice e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="clientsDc"
+                    class="com.company.sales.entity.Person">
+            <view extends="_local">
+                <property name="last_name"/>
+                <property name="first_name"/>
+                <property name="birthDay"/>
+            </view>
+            <loader id="clientsDl">
+                <query>
+                    <![CDATA[select e from sales_Person e where e.autoservices = :autos]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout expand="TabTables"
+            spacing="true">
+        <tabSheet id="TabTables">
+
+            <tab id="Autoservices" spacing="true" margin="true">
+                <vbox id="vbox1">
+                    <filter id="filter"
+                            applyTo="autoservicesTable"
+                            dataLoader="autoservicesDl">
+                        <properties include=".*"/>
+                    </filter>
+                    <filter id="EmployeeFilter"
+                            dataLoader="autoservicesDl">
+                        <custom name="Employee"
+                                caption="msg://Employee"
+                                paramClass="java.lang.String"
+                                join="join {E}.employees em">
+                            em.last_name like ?
+                        </custom>
+                    </filter>
+                    <groupTable id="autoservicesTable"
+                                width="100%"
+                                dataContainer="autoservicesDc">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="name"/>
+                            <column id="address"/>
+                            <column id="phone"/>
+                            <group>
+                                <column id="city"/>
+                            </group>
+                        </columns>
+                        <rowsCount/>
+                        <buttonsPanel id="buttonsPanel"
+                                      alwaysVisible="true">
+                            <button id="createBtn" action="autoservicesTable.create"/>
+                            <button id="editBtn" action="autoservicesTable.edit"/>
+                            <button id="removeBtn" action="autoservicesTable.remove"/>
+                        </buttonsPanel>
+                    </groupTable>
+                    <hbox id="lookupActions" spacing="true" visible="false">
+                        <button action="lookupSelectAction"/>
+                        <button action="lookupCancelAction"/>
+                    </hbox>
+                </vbox>
+
+            </tab>
+
+
+            <tab id="Clients" margin="true" spacing="true" caption="Clients">
+                <vbox id="vbox2">
+
+                    <groupTable id="clientsTable"
+                           width="100%"
+                           dataContainer="clientsDc"
+                           emptyStateMessage="Select a service to display customers">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="last_name"/>
+                            <column id="first_name"/>
+                            <column id="birthDay"/>
+                        </columns>
+                        <rowsCount/>
+                        <buttonsPanel id="buttonsPanel2"
+                                      alwaysVisible="true">
+                            <popupButton id="create" caption="msg://personsTable.create" description="Create" icon="CREATE_ACTION" stylename="primary">
+                                <actions>
+                                    <action id="createIndividuals" caption="msg://createIndividuals" description="create Individuals"/>
+                                    <action id="createLegal" caption="msg://createLegal" description="create Legal"/>
+                                </actions>
+                            </popupButton>
+
+                            <button id="remove" action="clientsTable.remove"/>
+                        </buttonsPanel>
+                    </groupTable>
+                    <hbox id="lookupActions2" spacing="true" visible="false">
+                        <button action="lookupSelectAction"/>
+                        <button action="lookupCancelAction"/>
+                    </hbox>
+                </vbox>
+            </tab>
+
+
+        </tabSheet>
+
+    </layout>
+</window>

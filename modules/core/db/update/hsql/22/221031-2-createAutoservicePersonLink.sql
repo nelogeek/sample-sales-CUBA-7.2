@@ -1,0 +1,2 @@
+alter table SALES_AUTOSERVICE_PERSON_LINK add constraint FK_AUTPER_AUTOSERVICE foreign key (AUTOSERVICE_ID) references SALES_AUTOSERVICE(ID);
+alter table SALES_AUTOSERVICE_PERSON_LINK add constraint FK_AUTPER_PERSON foreign key (PERSON_ID) references SALES_PERSON(ID);
