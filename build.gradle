@@ -32,6 +32,7 @@ cuba {
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
     appComponent('com.haulmont.addon.helium:helium-global:0.4.0')
+    appComponent('com.haulmont.addon.emailtemplates:yet-global:1.4.2')
 
 }
 

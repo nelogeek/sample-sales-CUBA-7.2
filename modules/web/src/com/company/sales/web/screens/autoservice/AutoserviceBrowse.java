@@ -1,5 +1,6 @@
 package com.company.sales.web.screens.autoservice;
 
+import com.company.sales.entity.Autoservice;
 import com.company.sales.entity.Individuals;
 import com.company.sales.entity.Legal;
 import com.company.sales.entity.Person;
@@ -7,25 +8,26 @@ import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
-import com.haulmont.cuba.gui.components.data.value.ContainerValueSource;
+import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
-import com.haulmont.cuba.gui.screen.*;
-import com.company.sales.entity.Autoservice;
 import com.haulmont.cuba.gui.screen.LookupComponent;
-import com.haulmont.cuba.gui.xml.layout.loaders.TabSheetLoader;
+import com.haulmont.cuba.gui.screen.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.Session;
+import javax.management.*;
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
-import java.util.Collection;
+import java.lang.management.ManagementFactory;
 
 @UiController("sales_Autoservice.browse")
 @UiDescriptor("autoservice-browse.xml")
 @LookupComponent("autoservicesTable")
 @LoadDataBeforeShow
-public class AutoserviceBrowse extends StandardLookup<Autoservice> {
+public class AutoserviceBrowse extends StandardLookup<Autoservice>{
+
+
 
     @Inject
     private GroupTable<Person> clientsTable;
@@ -36,15 +38,21 @@ public class AutoserviceBrowse extends StandardLookup<Autoservice> {
     private ScreenBuilders screenBuilders;
 
     @Inject
+    private CollectionContainer<Person> clientsDc;
+
+    @Inject
     private Metadata metadata;
     @Inject
     private CollectionLoader<Autoservice> autoservicesDl;
 
     @Inject
+    private CollectionContainer<Autoservice> autoservicesDc;
+
+    @Inject
     private CollectionLoader<Person> clientsDl;
 
     @Named("TabTables.Clients")
-    private VBoxLayout Clients;
+    private VBoxLayout ClientsTab;
 
     @Inject
     private Button createBtn;
@@ -52,36 +60,27 @@ public class AutoserviceBrowse extends StandardLookup<Autoservice> {
     private DataSource dataSource;
     @Inject
     private UiComponents uiComponents;
+    @Inject
+    private Actions actions;
+
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         autoservicesDl.load();
     }
 
+
+
     @Subscribe(id = "autoservicesDc", target = Target.DATA_CONTAINER)
     public void onAutoservicesDcItemChange(InstanceContainer.ItemChangeEvent<Autoservice> event) {
         clientsDl.setParameter("autos", event.getItem());
         clientsDl.load();
 
-        Clients.setCaption("Clients (3)");
+
+
+
+        ClientsTab.setCaption("Clients (3)");
     }
-
-//    @Subscribe
-//    protected void onInit(InitEvent event){
-//        clientsTable.addGeneratedColumn("Type", entity -> {
-//            LookupPickerField<Field> field = uiComponents.create(LookupPickerField.NAME);
-//            field.setValueSource(new ContainerValueSource<>(clientsTable.get));
-//        });
-//    }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -97,13 +96,12 @@ public class AutoserviceBrowse extends StandardLookup<Autoservice> {
         showCreateEditor(legal);
     }
 
-    private void showCreateEditor(Person person){
+    private void showCreateEditor(Person person) {
         screenBuilders.editor(clientsTable)
                 .editEntity(person)
                 .build()
                 .show();
     }
-
 
 
 

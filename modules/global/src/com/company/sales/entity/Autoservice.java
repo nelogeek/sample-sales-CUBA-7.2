@@ -6,8 +6,12 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.lang.management.ManagementFactory;
 import java.util.List;
 
 @Table(name = "SALES_AUTOSERVICE")
@@ -89,4 +93,6 @@ public class Autoservice extends StandardEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

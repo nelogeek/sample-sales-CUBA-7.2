@@ -115,6 +115,7 @@
                             <column id="last_name"/>
                             <column id="first_name"/>
                             <column id="birthDay"/>
+                            <column id="tip"/>
                         </columns>
                         <rowsCount/>
                         <buttonsPanel id="buttonsPanel2"
